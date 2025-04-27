@@ -1,0 +1,24 @@
+# https://docs.camunda.io/docs/apis-tools/spring-zeebe-sdk/getting-started/
+# https://docs.camunda.io/docs/apis-tools/spring-zeebe-sdk/configuration/
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+camunda:
+  client:
+    mode: saas
+    auth:
+      client-id: z4heKg3tOWTCcGXAHCekVvPXXFAIasi-
+      client-secret: QWwB5qTZGOo.9qx9JmGnQtx-u5NI1kLOA1FJvjhg4MtxVYuS0V7FK8MFemxrC9JZ
+    cloud:
+      cluster-id: 934b1276-1df7-4a6b-a961-942e7116ec91
+      region: fra-1
