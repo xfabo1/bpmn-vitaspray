@@ -37,7 +37,7 @@ public class CamundaJobWorker {
 
 	@JobWorker(type = "process_payment")
 	public Map<String, Object> process_payment(final ActivatedJob job) {
-		restTemplate.postForObject("http://localhost:8080/process_payment?fail=false", null, Void.class );
+		restTemplate.postForObject("http://localhost:8080/api/vitaspray/process_payment?fail=false", null, Void.class );
 		return null;
 	}
 
@@ -78,4 +78,18 @@ public class CamundaJobWorker {
 		Map<String, Object> result = Map.of("userFetched", true);
 		return result;
 	}
+
+	@JobWorker(type = "generate_personalized_recommendation")
+	public Map<String, Object> generateRecommendation(final ActivatedJob job) {
+  
+		var variables = job.getVariables();
+		System.out.println("Job received: " + variables);
+
+		String recommendation = "Your personalized spray xyz";
+
+		System.out.println("Recommendation generated for user: " + recommendation);
+
+		return Map.of("recommendedOrderProduct", recommendation);
+	}
+
 }
