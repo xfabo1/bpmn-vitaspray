@@ -8,16 +8,13 @@ public class EmailRoute extends RouteBuilder {
 
     @Override
     public void configure() {
-
-        // Register Camel REST to use Servlet
-        restConfiguration().component("servlet");
-
         from("rest:post:/send-email")
                 .log("📨 Received request to send email")
-                .toD("smtp://smtp.gmail.com:587?username=pv207muni@gmail.com&password=xqut pvgd qtcl nfhe&mail.smtp.starttls.enable=true&to=${header.to}&subject=${header.subject}&from=${header.from}")
-                .setBody(constant("")) // optional: ensure no response body
-                .setHeader("CamelHttpResponseCode", constant(204))
+                .setHeader("subject", constant("Test Email from Camel"))
+                .setHeader("to", constant("ilkinsadikh@icloud.com"))
+                .setHeader("from", constant("pv207muni@gmail.com"))
+                .setBody(constant("This is a test email sent by Camel from Spring Boot"))
+                .to("smtp://smtp.gmail.com:587?username=pv207muni@gmail.com&password=xqut pvgd qtcl nfhe&mail.smtp.starttls.enable=true")
                 .log("✅ Email sent");
-
     }
 }
