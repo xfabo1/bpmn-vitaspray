@@ -25,3 +25,8 @@ camunda:
     cloud:
       cluster-id: 934b1276-1df7-4a6b-a961-942e7116ec91
       region: fra-1
+
+camel:
+  servlet:
+    mapping:
+      contextPath: /camel/*
