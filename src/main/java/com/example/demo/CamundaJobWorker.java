@@ -8,6 +8,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,6 +20,8 @@ import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import io.camunda.zeebe.spring.common.exception.ZeebeBpmnError;
 
+import org.apache.camel.ProducerTemplate;
+
 @Component
 public class CamundaJobWorker {
 
@@ -24,6 +29,8 @@ public class CamundaJobWorker {
 	private OrderRepository orderRepository;
 	private RestTemplate restTemplate;
 	private BillRepository billRepository;
+	@Autowired
+	private ProducerTemplate producerTemplate;
 
 	@Autowired
 	public CamundaJobWorker(ObjectMapper objectMapper, OrderRepository orderRepository, RestTemplate restTemplate, BillRepository billRepository) {
@@ -128,6 +135,29 @@ public class CamundaJobWorker {
 
 		System.out.println(packaging);
 		return null;
+	}
+
+	@JobWorker(type = "send_email")
+	public Map<String, Object> sendEmail(final ActivatedJob job) {
+		String to = (String) job.getVariablesAsMap().get("to");
+		String subject = (String) job.getVariablesAsMap().get("subject");
+		String body = (String) job.getVariablesAsMap().get("body");
+
+		if (to == null || subject == null || body == null) {
+			throw new RuntimeException("Missing one of the required variables: to, subject, body");
+		}
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.TEXT_PLAIN);
+		headers.add("to", to);
+		headers.add("subject", subject);
+		headers.add("from", "pv207muni@gmail.com"); // hardcoded sender
+
+		HttpEntity<String> request = new HttpEntity<>(body, headers);
+
+		restTemplate.postForObject("http://localhost:8080/camel/send-email", request, String.class);
+
+		return Map.of("emailSent", true);
 	}
 
 }
