@@ -20,8 +20,8 @@ camunda:
   client:
     mode: saas
     auth:
-      client-id: z4heKg3tOWTCcGXAHCekVvPXXFAIasi-
-      client-secret: QWwB5qTZGOo.9qx9JmGnQtx-u5NI1kLOA1FJvjhg4MtxVYuS0V7FK8MFemxrC9JZ
+      client-id: SEIO9uWUrDw_ZXZH3NdZhU92Aehs3nNy
+      client-secret: Znb-FFzov.ubDatz4a~.UF5_ZexIIotcoKky8dPamcotcructtxVeuS~Bga0qste
     cloud:
-      cluster-id: 934b1276-1df7-4a6b-a961-942e7116ec91
+      cluster-id: 565b35c4-7915-4f02-b111-09bdfb297c4e
       region: fra-1
