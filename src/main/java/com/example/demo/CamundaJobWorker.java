@@ -60,9 +60,11 @@ public class CamundaJobWorker {
 
 	@JobWorker(type = "process_payment")
 	public Map<String, Object> process_payment(final ActivatedJob job) throws InterruptedException {
+		// Change this value if you want to simulate process payment throwing exception
 		boolean throwsException = false;
 		var paymentInfo = objectMapper.convertValue(job.getVariable("payment"), PaymentDetails.class);
 		System.out.println("Job received: " + paymentInfo);
+		// Change the url from fail=false to fail=true if you want to simulate payment process return failure
 		var result = restTemplate.getForObject("http://localhost:8080/api/vitaspray/process_payment?fail=false", String.class );
 
 		if (throwsException) {
