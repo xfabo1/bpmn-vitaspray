@@ -68,7 +68,7 @@ public class CamundaJobWorker {
 		if (throwsException) {
 			throw new ZeebeBpmnError("500", "Error", Map.of());
 		}
-		Thread.sleep(10000);
+		Thread.sleep(20000);
 		if (Objects.equals(result, "Payment successful")) {
 			return Map.of("paymentResult", "success");
 		}
