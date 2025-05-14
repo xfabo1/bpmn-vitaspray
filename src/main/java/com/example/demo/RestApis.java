@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import java.util.Map;
+import java.time.Duration;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ public class RestApis {
 		zeebeClient.newPublishMessageCommand()
 				.messageName("cancel_payment")
 				.correlationKey("cancel_payment")
+				.timeToLive(Duration.ofSeconds(10))
 				.variables("{}")
 				.send()
 				.join();
@@ -41,6 +44,7 @@ public class RestApis {
 		zeebeClient.newPublishMessageCommand()
 				.messageName("retry_payment")
 				.correlationKey("retry_payment")
+				.timeToLive(Duration.ofSeconds(10))
 				.variables("{}")
 				.send()
 				.join();
